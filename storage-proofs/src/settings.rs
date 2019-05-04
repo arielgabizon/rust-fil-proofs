@@ -14,6 +14,7 @@ pub struct Settings {
     pub maximize_caching: bool,
     pub merkle_tree_path: String,
     pub num_proving_threads: usize,
+    pub replicated_trees_dir: String,
 }
 
 impl Default for Settings {
@@ -22,6 +23,7 @@ impl Default for Settings {
             maximize_caching: false,
             merkle_tree_path: "/tmp/merkle-trees".into(),
             num_proving_threads: 1,
+            replicated_trees_dir: "".into(),
         }
     }
 }
