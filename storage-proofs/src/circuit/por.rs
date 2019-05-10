@@ -167,7 +167,7 @@ impl<'a, E: JubjubEngine, H: Hasher> Circuit<E> for PoRCircuit<'a, E, H> {
                 )?);
 
                 // Witness the authentication path element adjacent
-                // at this depth.
+                // at this depth. (Ariel:add depth as part of var name?)
                 let path_element =
                     num::AllocatedNum::alloc(cs.namespace(|| "path element"), || {
                         Ok(e.ok_or(SynthesisError::AssignmentMissing)?.0)

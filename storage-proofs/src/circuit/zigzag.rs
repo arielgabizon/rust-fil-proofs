@@ -82,11 +82,12 @@ impl<'a, H: Hasher> ZigZagCircuit<'a, Bls12, H> {
 impl<'a, H: Hasher> Circuit<Bls12> for ZigZagCircuit<'a, Bls12, H> {
     fn synthesize<CS: ConstraintSystem<Bls12>>(self, cs: &mut CS) -> Result<(), SynthesisError> {
         let graph = &self.public_params.graph;
+        // change var/struct name to something with number/count,e.g. layer_challenges_number?
         let layer_challenges = &self.public_params.layer_challenges;
         let sloth_iter = self.public_params.sloth_iter;
 
         assert_eq!(layer_challenges.layers(), self.layers.len());
-
+        // the set of values comm_r for all layers
         let mut comm_rs: Vec<num::AllocatedNum<_>> = Vec::with_capacity(self.layers.len());
 
         // allocate replica id
@@ -116,7 +117,7 @@ impl<'a, H: Hasher> Circuit<Bls12> for ZigZagCircuit<'a, Bls12, H> {
         public_comm_r.inputize(cs.namespace(|| "zigzag_comm_r"))?;
 
         let height = graph.merkle_tree_depth() as usize;
-
+        // the proofs in layers are the non-compressed non-SNARK proofs, e.g. a set of Merkle paths
         for (l, v) in self.layers.iter().enumerate() {
             let public_inputs = v.as_ref().map(|v| &v.0);
             let layer_proof = v.as_ref().map(|v| &v.1);

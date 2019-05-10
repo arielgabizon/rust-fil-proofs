@@ -298,6 +298,7 @@ where
             .collect();
 
         assert_eq!(
+            //tau = (comm_r,comm_d)
             public_inputs.tau.is_none(),
             public_params.private,
             "inconsistent private state"
@@ -505,6 +506,7 @@ impl<'a, E: JubjubEngine, H: Hasher> Circuit<E> for DrgPoRepCircuit<'a, E, H> {
                     degree,
                 )?;
 
+                //perhaps simplify as sloth_iter zero?
                 let decoded = sloth::decode(
                     cs.namespace(|| "sloth_decode"),
                     &key,
